@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Creating a windowScene instead of Main.storyboard...
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        let vc = ViewController()
+        let vc = RMTabViewController()
         
         let window = UIWindow(windowScene: windowScene)
         window.rootViewController = vc
