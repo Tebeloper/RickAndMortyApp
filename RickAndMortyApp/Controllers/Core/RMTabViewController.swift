@@ -16,13 +16,16 @@ final class RMTabViewController: UITabBarController {
         setUpTabs()
     }
 
+    /// A private func that setting up and shows the 4 tab buttons of the screens
     private func setUpTabs() {
         
+        // Creating instances for each tab buttons
         let charactersVC = RMCharacterViewController()
         let locationsVC = RMLocationViewController()
         let episodesVC = RMEpisodeViewController()
         let settingsVC = RMSettingsViewController()
         
+        // Setting the title to LargeTitle based on Apple Design Guidelines
         charactersVC.navigationItem.largeTitleDisplayMode = .always
         locationsVC.navigationItem.largeTitleDisplayMode = .always
         episodesVC.navigationItem.largeTitleDisplayMode = .always

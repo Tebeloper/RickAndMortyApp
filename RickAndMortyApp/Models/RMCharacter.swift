@@ -35,12 +35,14 @@ struct RMSingleLocation: Codable {
     let url: String
 }
 
+// MARK: - enum RMCharacterStatus
 enum RMCharacterStatus: String, Codable {
     case alive = "Alive"
     case dead = "Dead"
     case unknown = "unknown"
 }
 
+// MARK: - enum RMCharacterGender
 enum RMCharacterGender: String, Codable {
     case male = "Male"
     case genderless = "Genderless"
