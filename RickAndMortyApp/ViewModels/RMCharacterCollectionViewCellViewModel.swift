@@ -24,9 +24,10 @@ final class RMCharacterCollectionViewCellViewModel {
     }
     
     public var characterStatusText: String {
-        return characterStatus.rawValue
+        return "Status: \(characterStatus.text)"
     }
     
+    // Method to fetch the imageURL and convert it into an actual image in View
     public func fetchImage(completion: @escaping(Result<Data, Error>) -> Void) {
         
         // ToDo: Abstract to Image Manager
