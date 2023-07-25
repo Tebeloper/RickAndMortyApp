@@ -35,22 +35,22 @@ final class RMRequest {
                 string += "/\($0)"
             }
         }
+        
+        if !queryParameters.isEmpty {
+            string += "?"
             
-            if !queryParameters.isEmpty {
-                string += "?"
+            // name=value&name=value...
+            let argumentString = queryParameters.compactMap{
                 
-                // name=value&name=value...
-                let argumentString = queryParameters.compactMap{
-                    
-                    guard let value = $0.value else { return nil }
-                    
-                    return "\($0.name)=\(value)"
-                }.joined(separator: "&")
+                guard let value = $0.value else { return nil }
                 
-                string += argumentString
-            }
+                return "\($0.name)=\(value)"
+            }.joined(separator: "&")
             
-            return string
+            string += argumentString
+        }
+        
+        return string
         
     }
     
@@ -78,6 +78,35 @@ final class RMRequest {
         self.endpoint = endpoint
         self.pathComponents = pathComponents
         self.queryParameters = queryParameters
+    }
+    
+    convenience init?(url: URL) {
+        let string = url.absoluteString
+        if !string.contains(Constants.baseURL) {
+            return nil
+        }
+        
+        let trimmed = string.replacingOccurrences(of: Constants.baseURL+"/", with: "")
+        if trimmed.contains("/") {
+            let components = trimmed.components(separatedBy: "/")
+            if !components.isEmpty {
+                let endpointString = components[0]
+                if let rmEndpoint = RMEndpoint(rawValue: endpointString) {
+                    self.init(endpoint: rmEndpoint)
+                    return
+                }
+            }
+        } else if trimmed.contains("?") {
+            let components = trimmed.components(separatedBy: "?")
+            if !components.isEmpty {
+                let endpointString = components[0]
+                if let rmEndpoint = RMEndpoint(rawValue: endpointString) {
+                    self.init(endpoint: rmEndpoint)
+                    return
+                }
+            }
+        }
+        return nil
     }
 }
 

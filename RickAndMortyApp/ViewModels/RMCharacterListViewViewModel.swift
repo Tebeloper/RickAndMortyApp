@@ -58,10 +58,26 @@ final class RMCharacterListViewViewModel: NSObject {
     }
     
     /// Paginate if additional characters needed
-    public func fetchAdditionalCharacters() {
+    public func fetchAdditionalCharacters(with url: URL) {
         isLoadingMoreCharacters = true
-        // Fetch Characters
+        print("Fetching more Characters")
         
+        guard let request = RMRequest(url: url) else {
+            isLoadingMoreCharacters = false
+            print("Failed to create request")
+            return
+        }
+        
+        RMService.shared.execute(
+            request,
+            expecting: RMGetAllCharactersResponse.self) { result in
+                switch result {
+                case .success(let success):
+                    print(String(describing: success))
+                case .failure(let failure):
+                    print(String(describing: failure))
+                }
+            }
     }
     
     public var shouldShowLoadMoreIndicator: Bool {
@@ -137,16 +153,20 @@ extension RMCharacterListViewViewModel: UICollectionViewDataSource, UICollection
 extension RMCharacterListViewViewModel: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        guard shouldShowLoadMoreIndicator, !isLoadingMoreCharacters else {
+        guard shouldShowLoadMoreIndicator,
+              !isLoadingMoreCharacters,
+              let nextURLString = apiInfo?.next,
+              let url = URL(string: nextURLString) else {
             return
         }
         
+        // Help us know when the scroll is on bottom so only then we're making the API call
         let offset = scrollView.contentOffset.y
         let totalContentHeight = scrollView.contentSize.height
         let totalScrollViewFixedHeight = scrollView.frame.size.height
         
         if offset >= ( totalContentHeight - totalScrollViewFixedHeight - 100) {
-            fetchAdditionalCharacters()
+            fetchAdditionalCharacters(with: url)
         }
     }
 }
