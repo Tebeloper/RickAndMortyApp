@@ -9,13 +9,13 @@ import UIKit
 
 /// Controllers to House Tabs and Root Tab Controllers
 final class RMTabViewController: UITabBarController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setUpTabs()
     }
-
+    
     /// A private func that setting up and shows the 4 tab buttons of the screens
     private func setUpTabs() {
         
@@ -30,7 +30,7 @@ final class RMTabViewController: UITabBarController {
         locationsVC.navigationItem.largeTitleDisplayMode = .always
         episodesVC.navigationItem.largeTitleDisplayMode = .always
         settingsVC.navigationItem.largeTitleDisplayMode = .always
-
+        
         
         let nav1 = UINavigationController(rootViewController: charactersVC)
         let nav2 = UINavigationController(rootViewController: locationsVC)
@@ -59,7 +59,7 @@ final class RMTabViewController: UITabBarController {
                             nav3,
                             nav4],
                            animated: true)
-
+        
     }
 }
 

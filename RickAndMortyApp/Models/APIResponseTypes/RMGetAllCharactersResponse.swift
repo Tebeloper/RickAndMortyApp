@@ -18,5 +18,3 @@ struct RMGetAllCharactersResponse: Codable {
         let prev: String?
     }
 }
-
-
