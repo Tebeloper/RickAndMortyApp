@@ -11,18 +11,40 @@ final class RMCharacterDetailViewViewModel {
     
     private let character: RMCharacter
     
-    enum SectionType: CaseIterable {
-        case photo
-        case info
-        case episode
+    enum SectionType  {
+        case photo(viewModel: RMCharacterPhotoCollectionViewCellViewModel)
+        
+        case info(viewModel: [RMCharacterInfoCollectionViewCellViewModel])
+        
+        case episode(viewModel: [RMCharacterEpisodeCollectionViewCellViewModel])
+        
     }
     
-    public let sections = SectionType.allCases
+    public var sections: [SectionType] = []
     
     // MARK: - Init
     
     init(character: RMCharacter) {
         self.character = character
+        setUpSections()
+    }
+    
+    private func setUpSections() {
+        sections = [
+            .photo(viewModel: .init()),
+            .info(viewModel: [
+                .init(),
+                .init(),
+                .init(),
+                .init()
+            ]),
+            .episode(viewModel: [
+                .init(),
+                .init(),
+                .init(),
+                .init()
+            ])
+        ]
     }
     
     private var requestURL: URL? {
@@ -43,10 +65,10 @@ final class RMCharacterDetailViewViewModel {
             )
         )
         item.contentInsets = NSDirectionalEdgeInsets(
-            top: 3,
-            leading: 3,
+            top: 0,
+            leading: 5,
             bottom: 8,
-            trailing: 3)
+            trailing: 5)
         
         let group = NSCollectionLayoutGroup.vertical(
             layoutSize: NSCollectionLayoutSize(
@@ -69,9 +91,9 @@ final class RMCharacterDetailViewViewModel {
         )
         item.contentInsets = NSDirectionalEdgeInsets(
             top: 3,
-            leading: 3,
+            leading: 5,
             bottom: 3,
-            trailing: 3)
+            trailing: 5)
         
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: NSCollectionLayoutSize(
@@ -95,7 +117,7 @@ final class RMCharacterDetailViewViewModel {
         item.contentInsets = NSDirectionalEdgeInsets(
             top: 8,
             leading: 5,
-            bottom: 8,
+            bottom: 3,
             trailing: 8)
         
         let group = NSCollectionLayoutGroup.horizontal(

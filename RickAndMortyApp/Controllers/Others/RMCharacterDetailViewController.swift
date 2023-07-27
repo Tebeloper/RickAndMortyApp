@@ -68,22 +68,46 @@ extension RMCharacterDetailViewController: UICollectionViewDelegate, UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-        case 0:
+        let sectionType = viewModel.sections[section]
+        
+        switch sectionType {
+        case .photo:
             return 1
-        case 1:
-            return 6
-        case 2:
-            return 4
-        default:
-            return 1
+        case .info(let viewModel):
+            return viewModel.count
+        case .episode(let viewModel):
+            return viewModel.count
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        cell.backgroundColor = .systemBlue
         
-        return cell
+        let sectionType = viewModel.sections[indexPath.section]
+        
+        switch sectionType {
+        case .photo(let viewModel):
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RMCharacterPhotoCollectionViewCell.cellIdentifier, for: indexPath) as? RMCharacterPhotoCollectionViewCell else {
+                fatalError()
+            }
+            cell.configure(with: viewModel)
+            cell.backgroundColor = .systemRed
+            return cell
+            
+        case .info(let viewModel):
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RMCharacterInfoCollectionViewCell.cellIdentifier, for: indexPath) as? RMCharacterInfoCollectionViewCell else {
+                fatalError()
+            }
+            cell.configure(with: viewModel[indexPath.row])
+            cell.backgroundColor = .systemGreen
+            return cell
+            
+        case .episode(let viewModel):
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RMCharacterEpisodeCollectionViewCell.cellIdentifier, for: indexPath) as? RMCharacterEpisodeCollectionViewCell else {
+                fatalError()
+            }
+            cell.configure(with: viewModel[indexPath.row])
+            cell.backgroundColor = .systemBlue
+            return cell
+        }
     }
 }
