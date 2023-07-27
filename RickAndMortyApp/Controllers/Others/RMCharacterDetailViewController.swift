@@ -31,7 +31,7 @@ final class RMCharacterDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        title = viewModel.title
+        title = viewModel.title.uppercased()
         view.addSubview(detailView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .action,
