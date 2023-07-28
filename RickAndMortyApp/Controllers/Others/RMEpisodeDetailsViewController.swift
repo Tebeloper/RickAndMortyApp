@@ -10,12 +10,12 @@ import UIKit
 /// VC to show details about single episode
 final class RMEpisodeDetailsViewController: UIViewController {
 
-    private let url: URL?
+    private let viewModel: RMEpisodeDetailsViewViewModel
     
     // MARK: - Init
     
     init(url: URL?) {
-        self.url = url
+        self.viewModel = .init(endpointURL: url)
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -30,6 +30,6 @@ final class RMEpisodeDetailsViewController: UIViewController {
         super.viewDidLoad()
 
         title = "Episode"
-        view.backgroundColor = .systemGreen
+        view.backgroundColor = .systemBackground
     }
 }
