@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// A cell that the spinner is nested
 final class RMFooterLoadingCollectionReusableView: UICollectionReusableView {
     
     static let identifier = "RMFooterLoadingCollectionReusableView"
