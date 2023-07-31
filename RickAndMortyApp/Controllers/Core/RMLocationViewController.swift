@@ -23,7 +23,10 @@ final class RMLocationViewController: UIViewController {
         
         addSearchButton()
         addConstraints()
-
+        
+        viewModel.delegate = self
+        viewModel.fetchLocations()
+        
     }
 
     private func addSearchButton() {
@@ -43,5 +46,11 @@ final class RMLocationViewController: UIViewController {
     @objc
     private func didTapSearch() {
         
+    }
+}
+
+extension RMLocationViewController: RMLocationViewViewModelDelegate {
+    func didFetchInitialLocations() {
+        primaryView.configure(with: viewModel)
     }
 }
