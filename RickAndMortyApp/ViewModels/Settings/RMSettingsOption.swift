@@ -13,7 +13,6 @@ enum RMSettingsOption: CaseIterable {
     case terms
     case privacy
     case apiReference
-    case viewSeries
     case viewCode
     
     var displayTitle: String {
@@ -28,8 +27,6 @@ enum RMSettingsOption: CaseIterable {
             return "Privacy Policy"
         case .apiReference:
             return "API Reference"
-        case .viewSeries:
-            return "View Video Series"
         case .viewCode:
             return "Source (GitHub)"
         }
@@ -42,13 +39,11 @@ enum RMSettingsOption: CaseIterable {
         case .contact:
             return .systemBlue
         case .terms:
-            return .systemBlue
+            return .systemOrange
         case .privacy:
-            return .systemBlue
+            return .systemPurple
         case .apiReference:
             return .systemGreen
-        case .viewSeries:
-            return .systemBlue
         case .viewCode:
             return .systemBlue
         }
@@ -66,8 +61,6 @@ enum RMSettingsOption: CaseIterable {
             return UIImage(systemName: "lock.fill")
         case .apiReference:
             return UIImage(systemName: "network")
-        case .viewSeries:
-            return UIImage(systemName: "link")
         case .viewCode:
             return UIImage(systemName: "hammer.fill")
         }
