@@ -8,7 +8,7 @@
 import UIKit
 
 /// VC to show details about single episode
-final class RMEpisodeDetailsViewController: UIViewController, RMEpisodeDetailViewViewModelDelegate {
+final class RMEpisodeDetailsViewController: UIViewController, RMEpisodeDetailViewViewModelDelegate, RMEpisodeDetailsViewDelegate {
     
     private let viewModel: RMEpisodeDetailsViewViewModel
     
@@ -31,6 +31,7 @@ final class RMEpisodeDetailsViewController: UIViewController, RMEpisodeDetailVie
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(detailView)
+        detailView.delegate = self
         
         setUpConstraints()
         
@@ -57,7 +58,17 @@ final class RMEpisodeDetailsViewController: UIViewController, RMEpisodeDetailVie
         print("Share Button Pressed")
     }
     
-    // MARK: - Delegate
+    // MARK: - View Delegate
+    
+    func rmEpisodeDetailView(_ detailView: RMEpisodeDetailsView, didSelect character: RMCharacter) {
+        let vc = RMCharacterDetailViewController(viewModel: .init(character: character))
+        vc.title = character.name
+        vc.navigationItem.largeTitleDisplayMode = .never
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    // MARK: - ViewModel Delegate
     
     func didFetchEpisodeDetails() {
         detailView.configure(with: viewModel)
