@@ -7,15 +7,18 @@
 
 import UIKit
 
-protocol RMLocationDetailsViewDelegate: AnyObject {
-    func rmLocationDetailView(_ detailView: RMLocationDetailsView,
-                             didSelect character: RMCharacter)
+protocol RMLocationDetailViewDelegate: AnyObject {
+    func rmEpisodeDetailView(
+        _ detailView: RMLocationDetailView,
+        didSelect character: RMCharacter
+    )
 }
 
-final class RMLocationDetailsView: UIView {
-    public weak var delegate: RMLocationDetailsViewDelegate?
+final class RMLocationDetailView: UIView {
     
-    private var viewModel: RMLocationDetailsViewViewModel? {
+    public weak var delegate: RMLocationDetailViewDelegate?
+    
+    private var viewModel: RMLocationDetailViewViewModel? {
         didSet {
             spinner.stopAnimating()
             self.collectionView?.reloadData()
@@ -32,9 +35,7 @@ final class RMLocationDetailsView: UIView {
         let spinner = UIActivityIndicatorView()
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.hidesWhenStopped = true
-        
         return spinner
-        
     }()
     
     // MARK: - Init
@@ -43,11 +44,9 @@ final class RMLocationDetailsView: UIView {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .systemBackground
-        
         let collectionView = createCollectionView()
         addSubviews(collectionView, spinner)
         self.collectionView = collectionView
-        
         addConstraints()
         
         spinner.startAnimating()
@@ -58,7 +57,6 @@ final class RMLocationDetailsView: UIView {
     }
     
     private func addConstraints() {
-        
         guard let collectionView = collectionView else {
             return
         }
@@ -72,39 +70,42 @@ final class RMLocationDetailsView: UIView {
             collectionView.topAnchor.constraint(equalTo: topAnchor),
             collectionView.leftAnchor.constraint(equalTo: leftAnchor),
             collectionView.rightAnchor.constraint(equalTo: rightAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
-            
-            
+            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
     
     private func createCollectionView() -> UICollectionView {
         let layout = UICollectionViewCompositionalLayout { section, _ in
-            
             return self.layout(for: section)
         }
-        let collectionView = UICollectionView(frame: .zero,
-                                              collectionViewLayout: layout)
+        let collectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: layout
+        )
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.isHidden = true
         collectionView.alpha = 0
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(RMEpisodeInfoCollectionViewCell.self, forCellWithReuseIdentifier: RMEpisodeInfoCollectionViewCell.cellIdentifier)
-        collectionView.register(RMCharacterCollectionViewCell.self, forCellWithReuseIdentifier: RMCharacterCollectionViewCell.cellIdentifier)
-        
+        collectionView.register(RMEpisodeInfoCollectionViewCell.self,
+                                forCellWithReuseIdentifier: RMEpisodeInfoCollectionViewCell.cellIdentifier)
+        collectionView.register(RMCharacterCollectionViewCell.self,
+                                forCellWithReuseIdentifier: RMCharacterCollectionViewCell.cellIdentifier)
         return collectionView
     }
     
     // MARK: - Public
     
-    public func configure(with viewModel: RMLocationDetailsViewViewModel) {
+    public func configure(with viewModel: RMLocationDetailViewViewModel) {
         self.viewModel = viewModel
-        
     }
 }
 
-extension RMLocationDetailsView: UICollectionViewDelegate, UICollectionViewDataSource {
+extension RMLocationDetailView: UICollectionViewDelegate, UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return viewModel?.cellViewModels.count ?? 0
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let sections = viewModel?.cellViewModels else {
             return 0
@@ -112,15 +113,11 @@ extension RMLocationDetailsView: UICollectionViewDelegate, UICollectionViewDataS
         let sectionType = sections[section]
         
         switch sectionType {
-        case .info(viewModel: let viewModels):
+        case .info(let viewModels):
             return viewModels.count
-        case.characters(viewModel: let viewModels):
+        case .characters(let viewModels):
             return viewModels.count
         }
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return viewModel?.cellViewModels.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -131,7 +128,7 @@ extension RMLocationDetailsView: UICollectionViewDelegate, UICollectionViewDataS
         let sectionType = sections[indexPath.section]
         
         switch sectionType {
-        case .info(viewModel: let viewModels):
+        case .info(let viewModels):
             let cellViewModel = viewModels[indexPath.row]
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: RMEpisodeInfoCollectionViewCell.cellIdentifier,
@@ -140,9 +137,8 @@ extension RMLocationDetailsView: UICollectionViewDelegate, UICollectionViewDataS
                 fatalError()
             }
             cell.configure(with: cellViewModel)
-            
             return cell
-        case.characters(viewModel: let viewModels):
+        case .characters(let viewModels):
             let cellViewModel = viewModels[indexPath.row]
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: RMCharacterCollectionViewCell.cellIdentifier,
@@ -151,7 +147,6 @@ extension RMLocationDetailsView: UICollectionViewDelegate, UICollectionViewDataS
                 fatalError()
             }
             cell.configure(with: cellViewModel)
-            
             return cell
         }
     }
@@ -161,26 +156,23 @@ extension RMLocationDetailsView: UICollectionViewDelegate, UICollectionViewDataS
         guard let viewModel = viewModel else {
             return
         }
-        
         let sections = viewModel.cellViewModels
         let sectionType = sections[indexPath.section]
         
         switch sectionType {
         case .info:
             break
-        case.characters:
+        case .characters:
             guard let character = viewModel.character(at: indexPath.row) else {
                 return
             }
-            
-            delegate?.rmLocationDetailView(self, didSelect: character)
+            delegate?.rmEpisodeDetailView(self, didSelect: character)
         }
     }
-    
 }
 
-extension RMLocationDetailsView {
-    private func layout(for section: Int) -> NSCollectionLayoutSection {
+extension RMLocationDetailView {
+    func layout(for section: Int) -> NSCollectionLayoutSection {
         guard let sections = viewModel?.cellViewModels else {
             return createInfoLayout()
         }
@@ -188,24 +180,32 @@ extension RMLocationDetailsView {
         switch sections[section] {
         case .info:
             return createInfoLayout()
-        case.characters:
+        case .characters:
             return createCharacterLayout()
         }
     }
     
-    private func createInfoLayout() -> NSCollectionLayoutSection{
-        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
+    func createInfoLayout() -> NSCollectionLayoutSection {
+        
+        let item = NSCollectionLayoutItem(layoutSize: .init(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1))
+        )
+        
         item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
         
-        
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(80)), subitems: [item])
+        let group = NSCollectionLayoutGroup.vertical(
+            layoutSize: .init(widthDimension: .fractionalWidth(1),
+                              heightDimension: .absolute(80)),
+            subitems: [item]
+        )
         
         let section = NSCollectionLayoutSection(group: group)
         
         return section
     }
     
-    private func createCharacterLayout() -> NSCollectionLayoutSection{
+    func createCharacterLayout() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(0.5),
@@ -213,10 +213,11 @@ extension RMLocationDetailsView {
             )
         )
         item.contentInsets = NSDirectionalEdgeInsets(
-            top: 3,
+            top: 5,
             leading: 10,
-            bottom: 3,
-            trailing: 10)
+            bottom: 5,
+            trailing: 10
+        )
         
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: NSCollectionLayoutSize(
@@ -230,3 +231,5 @@ extension RMLocationDetailsView {
         return section
     }
 }
+
+

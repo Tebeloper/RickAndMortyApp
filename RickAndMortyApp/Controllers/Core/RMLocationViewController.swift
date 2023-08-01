@@ -53,7 +53,7 @@ final class RMLocationViewController: UIViewController {
 
 extension RMLocationViewController: RMLocationViewDelegate {
     func rmLocationView(_ locationView: RMLocationView, didSelect location: RMLocation) {
-        let vc = RMLocationDetailsViewController(location: location)
+        let vc = RMLocationDetailViewController(location: location)
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
     }
