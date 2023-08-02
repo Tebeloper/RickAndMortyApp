@@ -42,8 +42,8 @@ final class RMSearchView: UIView {
 //        imageView.image = UIImage(named: "noResults")
         
         addConstraints()
-        searchInputView.configure(with: RMSearchInputViewViewModel(type: viewModel.config.type))
         
+        searchInputView.configure(with: RMSearchInputViewViewModel(type: viewModel.config.type))
         searchInputView.delegate = self
         
         viewModel.registerOptionChangeBlock { tuple in
@@ -106,9 +106,17 @@ extension RMSearchView: UICollectionViewDelegate, UICollectionViewDataSource {
 // MARK: - RMSearchInputViewDelegate
 
 extension RMSearchView: RMSearchInputViewDelegate {
+    
     func rmSearchInputView(_ inputView: RMSearchInputView, didSelectOption option: RMSearchInputViewViewModel.DynamicOptions) {
         delegate?.rmSearchView(self, didSelectOption: option)
     }
     
+    func rmSearchInputView(_ inputView: RMSearchInputView, didChangeSearchText text: String) {
+        viewModel.set(query: text)
+    }
+    
+    func rmSearchInputViewDidTapSearchKeyboardButton(_ inputView: RMSearchInputView) {
+        viewModel.executeSearch()
+    }
     
 }
