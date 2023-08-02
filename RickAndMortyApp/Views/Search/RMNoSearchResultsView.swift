@@ -57,7 +57,6 @@ final class RMNoSearchResultsView: UIView {
             label.leftAnchor.constraint(equalTo: leftAnchor),
             label.rightAnchor.constraint(equalTo: rightAnchor),
             label.bottomAnchor.constraint(equalTo: bottomAnchor),
-//            label.heightAnchor.constraint(greaterThanOrEqualToConstant: 60)
         ])
     }
     

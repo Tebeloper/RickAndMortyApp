@@ -22,6 +22,14 @@ final class RMSearchView: UIView {
     private let searchInputView = RMSearchInputView()
     private let noResultsView = RMNoSearchResultsView()
     
+//    private let imageView: UIImageView = {
+//       let imageView = UIImageView()
+//        imageView.contentMode = .scaleAspectFit
+//        imageView.translatesAutoresizingMaskIntoConstraints = false
+//
+//        return imageView
+//    }()
+    
     // MARK: - Init
     
     init(frame: CGRect, viewModel: RMSearchViewViewModel) {
@@ -31,10 +39,16 @@ final class RMSearchView: UIView {
         backgroundColor = .systemBackground
         addSubviews(searchInputView, noResultsView)
         
+//        imageView.image = UIImage(named: "noResults")
+        
         addConstraints()
         searchInputView.configure(with: RMSearchInputViewViewModel(type: viewModel.config.type))
         
         searchInputView.delegate = self
+        
+        viewModel.registerOptionChangeBlock { tuple in
+            self.searchInputView.update(option: tuple.0, value: tuple.1)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -54,7 +68,13 @@ final class RMSearchView: UIView {
             noResultsView.widthAnchor.constraint(equalToConstant: 350),
             noResultsView.heightAnchor.constraint(equalToConstant: 350),
             noResultsView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            noResultsView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            noResultsView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
+//            //imageView
+//            imageView.widthAnchor.constraint(equalToConstant: 350),
+//            imageView.heightAnchor.constraint(equalToConstant: 350),
+//            imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+//            imageView.centerXAnchor.constraint(equalTo: centerXAnchor)
             
         ])
     }
