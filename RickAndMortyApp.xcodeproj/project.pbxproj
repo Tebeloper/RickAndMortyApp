@@ -185,8 +185,8 @@
 		CB58759F2A657BFB00401245 /* DataTypes */ = {
 			isa = PBXGroup;
 			children = (
-				CBC36C992A619D3A00A31FFC /* RMLocation.swift */,
 				CBC36C9B2A619D4700A31FFC /* RMCharacter.swift */,
+				CBC36C992A619D3A00A31FFC /* RMLocation.swift */,
 				CBC36C9D2A619D5A00A31FFC /* RMEpisode.swift */,
 			);
 			path = DataTypes;
@@ -196,8 +196,8 @@
 			isa = PBXGroup;
 			children = (
 				CB5875A12A657C3C00401245 /* RMGetAllCharactersResponse.swift */,
-				CB89521D2A7470A100D13465 /* RMGetAllEpisodesResponse.swift */,
 				CB667F972A78727C0046484F /* RMGetAllLocationsResponse.swift */,
+				CB89521D2A7470A100D13465 /* RMGetAllEpisodesResponse.swift */,
 			);
 			path = APIResponseTypes;
 			sourceTree = "<group>";
@@ -225,8 +225,8 @@
 			isa = PBXGroup;
 			children = (
 				CB9024E32A79A13400438328 /* RMSearchView.swift */,
-				CB9024E82A79A38D00438328 /* RMNoSearchResultsView.swift */,
 				CB9024EC2A79A41C00438328 /* RMSearchInputView.swift */,
+				CB9024E82A79A38D00438328 /* RMNoSearchResultsView.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -263,8 +263,8 @@
 			isa = PBXGroup;
 			children = (
 				CB9024E62A79A1E300438328 /* RMSearchViewViewModel.swift */,
-				CB9024EA2A79A3C600438328 /* RMNoSearchResultsViewViewModel.swift */,
 				CB9024EE2A79A43800438328 /* RMSearchInputViewViewModel.swift */,
+				CB9024EA2A79A3C600438328 /* RMNoSearchResultsViewViewModel.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -429,8 +429,8 @@
 		CBE6074A2A727DEC0096B62C /* Character */ = {
 			isa = PBXGroup;
 			children = (
-				CB69A2402A6D827600566F73 /* RMCharacterCollectionViewCell.swift */,
 				CB69A23C2A6D741E00566F73 /* RMCharacterListView.swift */,
+				CB69A2402A6D827600566F73 /* RMCharacterCollectionViewCell.swift */,
 			);
 			path = Character;
 			sourceTree = "<group>";
