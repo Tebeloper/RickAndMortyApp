@@ -24,14 +24,6 @@ final class RMSearchView: UIView {
     private let noResultsView = RMNoSearchResultsView()
     private let resultsView = RMSearchResultsView()
     
-    //    private let imageView: UIImageView = {
-    //       let imageView = UIImageView()
-    //        imageView.contentMode = .scaleAspectFit
-    //        imageView.translatesAutoresizingMaskIntoConstraints = false
-    //
-    //        return imageView
-    //    }()
-    
     // MARK: - Init
     
     init(frame: CGRect, viewModel: RMSearchViewViewModel) {
@@ -40,9 +32,7 @@ final class RMSearchView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .systemBackground
         addSubviews(searchInputView, noResultsView, resultsView)
-        
-        //        imageView.image = UIImage(named: "noResults")
-        
+                
         addConstraints()
         
         searchInputView.configure(with: RMSearchInputViewViewModel(type: viewModel.config.type))
@@ -97,12 +87,6 @@ final class RMSearchView: UIView {
             resultsView.leftAnchor.constraint(equalTo: leftAnchor),
             resultsView.rightAnchor.constraint(equalTo: rightAnchor),
             resultsView.bottomAnchor.constraint(equalTo: bottomAnchor)
-            
-            //            //imageView
-            //            imageView.widthAnchor.constraint(equalToConstant: 350),
-            //            imageView.heightAnchor.constraint(equalToConstant: 350),
-            //            imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            //            imageView.centerXAnchor.constraint(equalTo: centerXAnchor)
             
         ])
     }

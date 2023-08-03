@@ -48,7 +48,7 @@ final class RMLocationViewViewModel {
         self.didFinishPagination = block
     }
     
-    /// Paginate if additional episodes needed
+    /// Paginate if additional locations needed
     public func fetchAdditionalLocations() {
         
         guard !isLoadingMoreLocations else {
@@ -123,8 +123,4 @@ final class RMLocationViewViewModel {
             }
         }
     }
-    
-//    private var hasMoreResults: Bool {
-//        return false
-//    }
 }

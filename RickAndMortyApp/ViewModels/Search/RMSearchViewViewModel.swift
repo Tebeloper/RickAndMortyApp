@@ -21,7 +21,7 @@ final class RMSearchViewViewModel {
     private var noResultsHandler: (() -> Void)?
     
     private var searchResultModel: Codable?
-    
+        
     // MARK: - Init
     
     init(config: RMSearchViewController.Config) {
@@ -39,6 +39,10 @@ final class RMSearchViewViewModel {
     }
     
     public func executeSearch() {
+        
+        guard !searchText.trimmingCharacters(in: .whitespaces).isEmpty else {
+            return
+        }
         
         // Build arguments
         var queryParams: [URLQueryItem] = [
@@ -78,26 +82,31 @@ final class RMSearchViewViewModel {
     }
     
     private func processSearchResult(model: Codable) {
-        var resultsVM: RMSearchResultViewModel?
+        var resultsVM: RMSearchResultViewType?
+        var nextURL: String?
         if let characterResults = model as? RMGetAllCharactersResponse {
             resultsVM = .character(characterResults.results.compactMap({
                 return RMCharacterCollectionViewCellViewModel(characterName: $0.name, characterStatus: $0.status, characterImageURL: URL(string: $0.image))
             }))
+            nextURL = characterResults.info.next
         }
         else if let episodeResults = model as? RMGetAllEpisodesResponse {
             resultsVM = .episode(episodeResults.results.compactMap({
                 return RMCharacterEpisodeCollectionViewCellViewModel(episodeDataURL: URL(string: $0.url))
             }))
+            nextURL = episodeResults.info.next
         }
         else if let locationResults = model as? RMGetAllLocationsResponse {
             resultsVM = .location(locationResults.results.compactMap({
                 return RMLocationTableViewCellViewModel(location: $0)
             }))
+            nextURL = locationResults.info.next
         }
         
         if let results = resultsVM {
             self.searchResultModel = model
-            self.searchResultHandler?(results)
+            let vm = RMSearchResultViewModel(results: results, next: nextURL)
+            self.searchResultHandler?(vm)
         } else {
             handleNoResults()
         }

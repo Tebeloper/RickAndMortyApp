@@ -231,5 +231,3 @@ extension RMLocationDetailView {
         return section
     }
 }
-
-
