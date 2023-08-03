@@ -12,7 +12,7 @@ final class RMNoSearchResultsView: UIView {
     private let viewModel = RMNoSearchResultsViewViewModel()
     
     private let imageView: UIImageView = {
-       let imageView = UIImageView()
+        let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -20,7 +20,7 @@ final class RMNoSearchResultsView: UIView {
     }()
     
     private let label: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 20, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -34,7 +34,7 @@ final class RMNoSearchResultsView: UIView {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
         isHidden = true
-
+        
         addSubviews(imageView, label)
         addConstraints()
         configure()
@@ -52,7 +52,7 @@ final class RMNoSearchResultsView: UIView {
             imageView.heightAnchor.constraint(equalToConstant: 300),
             imageView.topAnchor.constraint(equalTo: topAnchor),
             imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
-
+            
             label.topAnchor.constraint(equalTo: imageView.bottomAnchor),
             label.leftAnchor.constraint(equalTo: leftAnchor),
             label.rightAnchor.constraint(equalTo: rightAnchor),

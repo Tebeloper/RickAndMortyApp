@@ -9,7 +9,7 @@ import UIKit
 
 /// Configurable Controller to Search
 final class RMSearchViewController: UIViewController {
-
+    
     ///Config for search session
     struct Config {
         enum `Type` {
@@ -22,7 +22,7 @@ final class RMSearchViewController: UIViewController {
                 case .character: return .character
                 case .episode: return .episode
                 case .location: return .location
-
+                    
                 }
             }
             
@@ -40,7 +40,7 @@ final class RMSearchViewController: UIViewController {
         
         let type: `Type`
     }
-
+    
     private let viewModel: RMSearchViewViewModel
     private let searchView: RMSearchView
     

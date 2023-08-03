@@ -21,14 +21,15 @@ final class RMSearchView: UIView {
     
     private let searchInputView = RMSearchInputView()
     private let noResultsView = RMNoSearchResultsView()
+    private let resultsView = RMSearchResultsView()
     
-//    private let imageView: UIImageView = {
-//       let imageView = UIImageView()
-//        imageView.contentMode = .scaleAspectFit
-//        imageView.translatesAutoresizingMaskIntoConstraints = false
-//
-//        return imageView
-//    }()
+    //    private let imageView: UIImageView = {
+    //       let imageView = UIImageView()
+    //        imageView.contentMode = .scaleAspectFit
+    //        imageView.translatesAutoresizingMaskIntoConstraints = false
+    //
+    //        return imageView
+    //    }()
     
     // MARK: - Init
     
@@ -37,26 +38,41 @@ final class RMSearchView: UIView {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .systemBackground
-        addSubviews(searchInputView, noResultsView)
+        addSubviews(searchInputView, noResultsView, resultsView)
         
-//        imageView.image = UIImage(named: "noResults")
+        //        imageView.image = UIImage(named: "noResults")
         
         addConstraints()
         
         searchInputView.configure(with: RMSearchInputViewViewModel(type: viewModel.config.type))
         searchInputView.delegate = self
         
-        viewModel.registerOptionChangeBlock { tuple in
-            self.searchInputView.update(option: tuple.0, value: tuple.1)
-        }
-        
-        viewModel.registerSearchResultHandler { results in
-            print(results)
-        }
+        setUpHandlers(viewModel: viewModel)
     }
     
     required init?(coder: NSCoder) {
         fatalError("Unsupported")
+    }
+    
+    private func setUpHandlers(viewModel: RMSearchViewViewModel) {
+        viewModel.registerOptionChangeBlock { tuple in
+            self.searchInputView.update(option: tuple.0, value: tuple.1)
+        }
+        
+        viewModel.registerSearchResultsHandler { [weak self] results in
+            DispatchQueue.main.async {
+                self?.resultsView.configure(with: results)
+                self?.noResultsView.isHidden = true
+                self?.resultsView.isHidden = false
+            }
+        }
+        
+        viewModel.registerNoResultsHandler { [weak self] in
+            DispatchQueue.main.async {
+                self?.noResultsView.isHidden = false
+                self?.resultsView.isHidden = true
+            }
+        }
     }
     
     private func addConstraints() {
@@ -74,11 +90,16 @@ final class RMSearchView: UIView {
             noResultsView.centerXAnchor.constraint(equalTo: centerXAnchor),
             noResultsView.centerYAnchor.constraint(equalTo: centerYAnchor),
             
-//            //imageView
-//            imageView.widthAnchor.constraint(equalToConstant: 350),
-//            imageView.heightAnchor.constraint(equalToConstant: 350),
-//            imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
-//            imageView.centerXAnchor.constraint(equalTo: centerXAnchor)
+            resultsView.topAnchor.constraint(equalTo: searchInputView.bottomAnchor),
+            resultsView.leftAnchor.constraint(equalTo: leftAnchor),
+            resultsView.rightAnchor.constraint(equalTo: rightAnchor),
+            resultsView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            
+            //            //imageView
+            //            imageView.widthAnchor.constraint(equalToConstant: 350),
+            //            imageView.heightAnchor.constraint(equalToConstant: 350),
+            //            imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            //            imageView.centerXAnchor.constraint(equalTo: centerXAnchor)
             
         ])
     }

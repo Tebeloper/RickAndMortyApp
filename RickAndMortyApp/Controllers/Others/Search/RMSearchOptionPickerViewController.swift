@@ -8,12 +8,12 @@
 import UIKit
 
 final class RMSearchOptionPickerViewController: UIViewController {
-
+    
     private let option: RMSearchInputViewViewModel.DynamicOptions
     private let selectionBlock: ((String)) -> Void
     
     private let tableView: UITableView = {
-       let tableView = UITableView()
+        let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
@@ -36,7 +36,7 @@ final class RMSearchOptionPickerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = .systemBackground
         
         setUpTableView()
@@ -52,7 +52,7 @@ final class RMSearchOptionPickerViewController: UIViewController {
             tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-
+            
         ])
     }
 }

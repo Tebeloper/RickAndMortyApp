@@ -143,7 +143,7 @@ final class RMSearchInputView: UIView {
             return
         }
         
-         buttons[index].setAttributedTitle(NSAttributedString(string: value.uppercased(), attributes: [
+        buttons[index].setAttributedTitle(NSAttributedString(string: value.uppercased(), attributes: [
             .font: UIFont.systemFont(ofSize: 18, weight: .medium),
             .foregroundColor: UIColor.systemBlue
         ]), for: .normal)
