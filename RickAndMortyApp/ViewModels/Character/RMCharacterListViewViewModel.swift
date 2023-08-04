@@ -94,18 +94,15 @@ final class RMCharacterListViewViewModel: NSObject {
                     let newCount = moreResults.count
                     let total = originalCount + newCount
                     let startingIndex = total - newCount
-                    
-                    let indexPathsToAdd: [IndexPath] = Array(startingIndex..<(startingIndex+newCount)).compactMap {
+                    let indexPathsToAdd: [IndexPath] = Array(startingIndex..<(startingIndex+newCount)).compactMap({
                         return IndexPath(row: $0, section: 0)
-                    }
-                    
+                    })
                     strongSelf.characters.append(contentsOf: moreResults)
                     
                     DispatchQueue.main.async {
                         strongSelf.delegate?.didLoadMoreCharacters(with: indexPathsToAdd)
+                        strongSelf.isLoadingMoreCharacters = false
                     }
-                    
-                    strongSelf.isLoadingMoreCharacters = false
                     
                 case .failure(let failure):
                     print(String(describing: failure))
@@ -174,7 +171,7 @@ extension RMCharacterListViewViewModel: UICollectionViewDataSource, UICollection
         if iPhone {
             width = (bounds.width-30)/2
         } else {
-           width = (bounds.width-50)/4
+            width = (bounds.width-50)/4
         }
         return CGSize(
             width: width,
