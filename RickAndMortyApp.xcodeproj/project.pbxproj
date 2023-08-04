@@ -308,6 +308,7 @@
 				CBC36C942A619C5700A31FFC /* Views */,
 				CBC36C952A619C5E00A31FFC /* ViewModels */,
 				CBC36C922A619BAE00A31FFC /* Controllers */,
+				CB2BA2D02A7D277800B15998 /* ScreenShots */,
 				CB94FAEE2A61894000202732 /* Info.plist */,
 			);
 			path = RickAndMortyApp;
@@ -436,7 +437,6 @@
 				CB15552E2A61B0DF00610A3D /* Assets.xcassets */,
 				CB94FAEB2A61894000202732 /* LaunchScreen.storyboard */,
 				CB69A23E2A6D78FC00566F73 /* Extensions.swift */,
-				CB2BA2D02A7D277800B15998 /* ScreenShots */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
