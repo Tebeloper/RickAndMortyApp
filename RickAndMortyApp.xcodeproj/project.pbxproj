@@ -234,9 +234,9 @@
 			isa = PBXGroup;
 			children = (
 				CB9024E32A79A13400438328 /* RMSearchView.swift */,
+				CBE1CAA62A7B9BFE003782E2 /* RMSearchResultsView.swift */,
 				CB9024EC2A79A41C00438328 /* RMSearchInputView.swift */,
 				CB9024E82A79A38D00438328 /* RMNoSearchResultsView.swift */,
-				CBE1CAA62A7B9BFE003782E2 /* RMSearchResultsView.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -273,8 +273,8 @@
 			isa = PBXGroup;
 			children = (
 				CB9024E62A79A1E300438328 /* RMSearchViewViewModel.swift */,
-				CB9024EE2A79A43800438328 /* RMSearchInputViewViewModel.swift */,
 				CB5AD4572A7AE8FB00453C9C /* RMSearchResultViewModel.swift */,
+				CB9024EE2A79A43800438328 /* RMSearchInputViewViewModel.swift */,
 				CB9024EA2A79A3C600438328 /* RMNoSearchResultsViewViewModel.swift */,
 			);
 			path = Search;
