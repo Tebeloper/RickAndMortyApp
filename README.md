@@ -1,6 +1,6 @@
 # Rick and Morty app 🔫
 
-![Alt Text](https://www.linkpicture.com/q/breaking-bad-rick-and-morty-wallpaper.jpg)
+![Alt Text](https://drive.google.com/uc?export=view&id=1k4umXFiwGWB42XPUq1lWAzWrcxXnOPXo)
 
 ## Full feature iOS application showcasing the Rick and Morty API
 
