@@ -14,5 +14,5 @@
 ## App Screenshots
 
 <div align="center">
-  <img src="https://www.linkpicture.com/q/1-PhotoRoom.png-PhotoRoom_1.png">
+    <img src="https://drive.google.com/uc?export=view&id=1wDnmHNzQdEA75LTGxNOmDz1c5FdvHOYG" alt="SwiftyForm Screenshot" width="600">
 </div>
